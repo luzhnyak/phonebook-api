@@ -17,9 +17,9 @@ const { BASE_URL } = process.env;
 const getCurrentUser = async (req, res) => {
   const { _id } = req.user;
 
-  const { name, email, subscription } = await User.findOne({ _id });
+  const { name, email, subscription, avatarURL } = await User.findOne({ _id });
 
-  res.json({ name, email, subscription });
+  res.json({ name, email, subscription, avatarURL });
 };
 
 // ============================== Register
