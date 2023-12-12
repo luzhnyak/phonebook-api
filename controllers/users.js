@@ -17,9 +17,9 @@ const { BASE_URL } = process.env;
 const getCurrentUser = async (req, res) => {
   const { _id } = req.user;
 
-  const { email, subscription } = await User.findOne({ _id });
+  const { name, email, subscription } = await User.findOne({ _id });
 
-  res.json({ email, subscription });
+  res.json({ name, email, subscription });
 };
 
 // ============================== Register
@@ -53,7 +53,11 @@ const registerUser = async (req, res) => {
   sendEmail(verifyEmail);
 
   res.status(201).json({
-    user: { email: newUser.email, subscription: newUser.subscription },
+    user: {
+      name: newUser.name,
+      email: newUser.email,
+      subscription: newUser.subscription,
+    },
   });
 };
 
@@ -89,7 +93,11 @@ const loginUser = async (req, res) => {
 
   res.status(200).json({
     token,
-    user: { email: user.email, subscription: user.subscription },
+    user: {
+      name: user.name,
+      email: user.email,
+      subscription: user.subscription,
+    },
   });
 };
 

@@ -1,5 +1,6 @@
 const { Contact } = require("../models/contact");
 const { HttpError, ctrlWrapper } = require("../helpers");
+const gravatar = require("gravatar");
 
 // ============================== Get All
 
@@ -40,9 +41,11 @@ const getContactById = async (req, res) => {
 
 const addContact = async (req, res) => {
   const { _id: owner } = req.user;
-  const result = await Contact.create({ ...req.body, owner });
+  const avatarURL = gravatar.url(req.body?.email);
 
-  res.status(201).json(result);
+  const user = await Contact.create({ ...req.body, avatarURL, owner });
+
+  res.status(201).json(user);
 };
 
 // ============================== Delete

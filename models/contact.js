@@ -12,13 +12,11 @@ const Joi = require("joi");
 
 const addSchema = Joi.object({
   name: Joi.string()
-    .min(3)
-    .max(30)
+    .min(2)
     .required()
     .messages({ "any.required": "missing required name field" }),
   email: Joi.string()
     .email()
-    .required()
     .messages({ "any.required": "missing required email field" }),
   phone: Joi.string()
     .min(5)
@@ -29,7 +27,7 @@ const addSchema = Joi.object({
 });
 
 const updateSchema = Joi.object({
-  name: Joi.string().min(3).max(30),
+  name: Joi.string().min(2),
   email: Joi.string().email(),
   phone: Joi.string().min(5).max(15),
   favorite: Joi.boolean(),
@@ -60,6 +58,10 @@ const contactSchema = new Schema(
     favorite: {
       type: Boolean,
       default: false,
+    },
+    avatarURL: {
+      type: String,
+      required: true,
     },
     owner: {
       type: Schema.Types.ObjectId,

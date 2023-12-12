@@ -9,6 +9,11 @@ const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const userSchema = new Schema(
   {
+    name: {
+      type: String,
+      minLength: 2,
+      required: [true, "Set name for user"],
+    },
     password: {
       type: String,
       minLength: 6,
@@ -51,6 +56,21 @@ const User = mongoose.model("user", userSchema);
 
 // ========================== Joi schemas
 
+const userRegisterSchema = Joi.object({
+  name: Joi.string()
+    .min(2)
+    .required()
+    .messages({ "any.required": "Set name for user" }),
+  password: Joi.string()
+    .min(6)
+    .required()
+    .messages({ "any.required": "Set password for user" }),
+  email: Joi.string().pattern(emailRegexp).required().messages({
+    "any.required": "Email is required",
+    "string.pattern.base": "Email {:[.]} is not valid",
+  }),
+});
+
 const userJoiSchema = Joi.object({
   password: Joi.string()
     .min(6)
@@ -78,4 +98,5 @@ module.exports = {
   userJoiSchema,
   userSubscriptionSchema,
   userEmailSchema,
+  userRegisterSchema,
 };

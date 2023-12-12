@@ -4,13 +4,14 @@ const {
   userJoiSchema,
   userSubscriptionSchema,
   userEmailSchema,
+  userRegisterSchema,
 } = require("../../models/user");
 
 const router = express.Router();
 
 const ctrl = require("../../controllers/users");
 
-router.post("/register", validateBody(userJoiSchema), ctrl.registerUser);
+router.post("/register", validateBody(userRegisterSchema), ctrl.registerUser);
 
 router.get("/verify/:verificationToken", ctrl.verifyEmail);
 
